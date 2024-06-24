@@ -37,19 +37,19 @@ if model is None or scaler is None or features is None:
 # Function to get user input
 def get_user_input():
     user_data = {}
-    user_data['age'] = st.sidebar.number_input('age', 0, 120, 25)
-    user_data['sex'] = st.sidebar.selectbox('sex', [0, 1])
-    user_data['cp'] = st.sidebar.selectbox('cp', [0, 1, 2, 3])
-    user_data['trestbps'] = st.sidebar.number_input('trestbps', 0, 200, 120)
-    user_data['chol'] = st.sidebar.number_input('chol', 0, 600, 200)
-    user_data['fbs'] = st.sidebar.selectbox('fbs', [0, 1])
-    user_data['restecg'] = st.sidebar.selectbox('restecg', [0, 1, 2])
-    user_data['thalach'] = st.sidebar.number_input('thalach', 0, 220, 150)
-    user_data['exang'] = st.sidebar.selectbox('exang', [0, 1])
-    user_data['oldpeak'] = st.sidebar.number_input('oldpeak', 0.0, 10.0, 1.0)
-    user_data['slope'] = st.sidebar.selectbox('slope', [0, 1, 2])
-    user_data['ca'] = st.sidebar.selectbox('ca', [0, 1, 2, 3, 4])
-    user_data['thal'] = st.sidebar.selectbox('thal', [0, 1, 2, 3])
+    user_data['age'] = st.sidebar.number_input('Age', 0, 120, 25)
+    user_data['sex'] = st.sidebar.selectbox('Sex', [0, 1])
+    user_data['cp'] = st.sidebar.selectbox('Chest Pain Type: 0 (Typical Angina), 1 (Atypical Angina), 2 (Non-anginal Pain), 3 (Asymptomatic)', [0, 1, 2, 3])
+    user_data['trestbps'] = st.sidebar.number_input('Resting Blood Pressure (mm Hg)', 0, 200, 120)
+    user_data['chol'] = st.sidebar.number_input('Serum Cholestol (mg/dl)', 0, 600, 200)
+    user_data['fbs'] = st.sidebar.selectbox('Fasting Blood Sugar > 120 mg/dl: 1 (True), 0 (False)', [0, 1])
+    user_data['restecg'] = st.sidebar.selectbox('Resting ECG: 0 (Normal), 1 (Having ST-T wave abnormality), 2 (Showing probable or definite left ventricular hypertrophy)', [0, 1, 2])
+    user_data['thalach'] = st.sidebar.number_input('Max Heart Rate Achieved', 0, 220, 150)
+    user_data['exang'] = st.sidebar.selectbox('Exercise Induced Angina: 1 (Yes), 0 (No)', [0, 1])
+    user_data['oldpeak'] = st.sidebar.number_input('ST Depression Induced by Exercise Relative to Rest', 0.0, 10.0, 1.0)
+    user_data['slope'] = st.sidebar.selectbox('Slope of the Peak Exercise ST Segment: 0 (Upsloping), 1 (Flat), 2 (Downsloping)', [0, 1, 2])
+    user_data['ca'] = st.sidebar.selectbox('Number of Major Vessels Colored by Fluoroscopy (0-4)', [0, 1, 2, 3, 4])
+    user_data['thal'] = st.sidebar.selectbox('Thal: 1 (Normal), 2 (Fixed Defect), 3 (Reversible Defect), 0 (Unknown)', [0, 1, 2, 3])
 
     features_df = pd.DataFrame(user_data, index=[0])
     return features_df
