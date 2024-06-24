@@ -66,6 +66,18 @@ user_input_aligned = user_input_encoded.reindex(columns=features, fill_value=0)
 # Set the title
 st.title("Heart Disease Prediction")
 
+
+# Get user input
+user_input = get_user_input()
+
+# Add a button to trigger the prediction
+if st.sidebar.button('Predict'):
+    # One-hot encode the categorical features
+    user_input_encoded = pd.get_dummies(user_input)
+
+    # Align the input features with the training features
+    user_input_aligned = user_input_encoded.reindex(columns=features, fill_value=0)
+
 # Display the user input
 st.subheader('User Input:')
 st.write(user_input_aligned)
