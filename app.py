@@ -2,18 +2,27 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import os
 
-# Load the best model
-with open('best_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+# Function to load a file with error handling
+def load_pickle(file_path):
+    try:
+        with open(file_path, 'rb') as file:
+            return pickle.load(file)
+    except FileNotFoundError:
+        st.error(f"File not found: {file_path}")
+        return None
+    except Exception as e:
+        st.error(f"Error loading file: {file_path}\n{str(e)}")
+        return None
 
-# Load the scaler
-with open('scaler.pkl', 'rb') as scaler_file:
-    scaler = pickle.load(scaler_file)
+# Load the best model, scaler, and feature names
+model = load_pickle('best_model.pkl')
+scaler = load_pickle('scaler.pkl')
+features = load_pickle('features.pkl')
 
-# Load the features
-with open('features.pkl', 'rb') as feature_file:
-    features = pickle.load(feature_file)
+if model is None or scaler is None or features is None:
+    st.stop()  # Stop the script if any of the files couldn't be loaded
 
 # Function to get user input
 def get_user_input():
@@ -64,4 +73,8 @@ st.write('Heart Disease' if prediction[0] == 1 else 'No Heart Disease')
 
 # Display the prediction probability
 st.subheader('Prediction Probability:')
-st.write(prediction_proba)
+st.write(f"Probability of having heart disease: {prediction_proba[0][1]:.2f}")
+
+# Add information about model performance
+st.subheader('Model Information:')
+st.write(f"Model: {type(model).__name__}")
