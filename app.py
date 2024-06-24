@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import os
+from sklearn.preprocessing import StandardScaler
 
 # Function to load a file with error handling
 def load_pickle(file_path):
@@ -11,6 +12,9 @@ def load_pickle(file_path):
             return pickle.load(file)
     except FileNotFoundError:
         st.error(f"File not found: {file_path}")
+        return None
+    except ImportError as e:
+        st.error(f"Import error: {str(e)}. Make sure all dependencies are installed.")
         return None
     except Exception as e:
         st.error(f"Error loading file: {file_path}\n{str(e)}")
