@@ -1,15 +1,8 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import pickle
-import os
 import xgboost as xgb
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score, classification_report, roc_auc_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.svm import SVC
-
 
 # Function to load a file with error handling
 def load_pickle(file_path):
@@ -54,49 +47,39 @@ def get_user_input():
     features_df = pd.DataFrame(user_data, index=[0])
     return features_df
 
-# Get user input
-user_input = get_user_input()
-
-# One-hot encode the categorical features
-user_input_encoded = pd.get_dummies(user_input)
-
-# Align the input features with the training features
-user_input_aligned = user_input_encoded.reindex(columns=features, fill_value=0)
-
 # Set the title
 st.title("Heart Disease Prediction")
 
-
-# Get user input
-user_input = get_user_input()
-
 # Add a button to trigger the prediction
 if st.sidebar.button('Predict'):
+    # Get user input
+    user_input = get_user_input()
+
     # One-hot encode the categorical features
     user_input_encoded = pd.get_dummies(user_input)
 
     # Align the input features with the training features
     user_input_aligned = user_input_encoded.reindex(columns=features, fill_value=0)
 
-# Display the user input
-st.subheader('User Input:')
-st.write(user_input_aligned)
+    # Display the user input
+    st.subheader('User Input:')
+    st.write(user_input_aligned)
 
-# Standardize the user input (apply the same scaling as used in training)
-user_input_scaled = scaler.transform(user_input_aligned)
+    # Standardize the user input (apply the same scaling as used in training)
+    user_input_scaled = scaler.transform(user_input_aligned)
 
-# Make predictions
-prediction = model.predict(user_input_scaled)
-prediction_proba = model.predict_proba(user_input_scaled)
+    # Make predictions
+    prediction = model.predict(user_input_scaled)
+    prediction_proba = model.predict_proba(user_input_scaled)
 
-# Display the prediction
-st.subheader('Prediction:')
-st.write('Heart Disease' if prediction[0] == 1 else 'No Heart Disease')
+    # Display the prediction
+    st.subheader('Prediction:')
+    st.write('Heart Disease' if prediction[0] == 1 else 'No Heart Disease')
 
-# Display the prediction probability
-st.subheader('Prediction Probability:')
-st.write(f"Probability of having heart disease: {prediction_proba[0][1]:.2f}")
+    # Display the prediction probability
+    st.subheader('Prediction Probability:')
+    st.write(f"Probability of having heart disease: {prediction_proba[0][1]:.2f}")
 
-# Add information about model performance
-st.subheader('Model Information:')
-st.write(f"Model: {type(model).__name__}")
+    # Add information about model performance
+    st.subheader('Model Information:')
+    st.write(f"Model: {type(model).__name__}")
