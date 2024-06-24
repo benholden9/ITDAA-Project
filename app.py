@@ -54,6 +54,9 @@ user_input = get_user_input()
 
 # Add a button to trigger the prediction
 if st.sidebar.button('Predict'):
+    # Display a message to indicate that the button has been clicked
+    st.write("Button clicked, processing input...")
+
     # One-hot encode the categorical features
     user_input_encoded = pd.get_dummies(user_input)
 
