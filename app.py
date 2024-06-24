@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import pickle
-import xgboost as xgb
 from sklearn.preprocessing import StandardScaler
 
 # Function to load a file with error handling
@@ -42,7 +41,7 @@ def get_user_input():
     user_data['oldpeak'] = st.sidebar.number_input('ST Depression Induced by Exercise Relative to Rest', 0.0, 10.0, 1.0)
     user_data['slope'] = st.sidebar.selectbox('Slope of the Peak Exercise ST Segment: 0 (Upsloping), 1 (Flat), 2 (Downsloping)', [0, 1, 2])
     user_data['ca'] = st.sidebar.selectbox('Number of Major Vessels Colored by Fluoroscopy (0-4)', [0, 1, 2, 3, 4])
-    user_data['thal'] = st.sidebar.selectbox('Thal: 1 (Normal), 2 (Fixed Defect), 3 (Reversible Defect), 0 (Unknown)', [0, 1, 2, 3])
+    user_data['thal'] = st.sidebar.selectbox('Status of Heart: 1 (Normal), 2 (Fixed Defect), 3 (Reversible Defect), 0 (Unknown)', [0, 1, 2, 3])
 
     features_df = pd.DataFrame(user_data, index=[0])
     return features_df
@@ -50,11 +49,11 @@ def get_user_input():
 # Set the title
 st.title("Heart Disease Prediction")
 
+# Get user input
+user_input = get_user_input()
+
 # Add a button to trigger the prediction
 if st.sidebar.button('Predict'):
-    # Get user input
-    user_input = get_user_input()
-
     # One-hot encode the categorical features
     user_input_encoded = pd.get_dummies(user_input)
 
